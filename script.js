@@ -1,16 +1,28 @@
-// Menu mobile
-const menuToggle = document.querySelector('.menu-toggle');
+
+const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 
-if (menuToggle && nav) {
-    menuToggle.addEventListener('click', () => {
-        nav.classList.toggle('open');
+if (toggle && nav) {
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    toggle.textContent = isOpen ? '✕' : '☰';
+  });
+
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Abrir menu');
+      toggle.textContent = '☰';
     });
+  });
 }
 
-// Fechar menu ao clicar em um link (no mobile)
-document.querySelectorAll('.nav a').forEach(link => {
-    link.addEventListener('click', () => {
-        nav.classList.remove('open');
-    });
-});
+const year = document.getElementById('year');
+
+if (year) {
+  year.textContent = new Date().getFullYear();
+}
